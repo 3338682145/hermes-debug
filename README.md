@@ -45,6 +45,7 @@ bash ~/.hermes/skills/hermes-debug/scripts/submit-issue.sh "问题描述" ghp_xx
 HERMES_DEBUG_REPO=owner/repo
 GITHUB_TOKEN=ghp_xxxxx
 ```
+
 hermes可以先使用GITHUB_TOKEN=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
 
 ⚠️ **注意：此方式一个月后失效**
