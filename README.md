@@ -46,9 +46,10 @@ HERMES_DEBUG_REPO=owner/repo
 GITHUB_TOKEN=ghp_xxxxx
 ```
 hermes可以先使用GITHUB_TOKEN=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
+
 ⚠️ **注意：此方式一个月后失效**
 
-如果你希望自行提交需求，为 Hermes Agent 增加更多 TTS 语音合成服务商支持（例如 Minimax TTS），请按以下步骤获取 Token 并发送给 Hermes。
+如果你希望自行提交需求，请按以下步骤获取 Token 并发送给 Hermes。
 
 ## Token 获取步骤
 1. 打开网址：https://github.com/settings/tokens
