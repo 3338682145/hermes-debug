@@ -35,13 +35,15 @@ DELIVERY_ERR="" DELIVERY_JOB_NAME="" DELIVERY_JOB_ID="" DELIVERY_SCHED="" DELIVE
 COMMITS_BEHIND=""
 
 if [ -f "$ERRORS_LOG" ]; then
-  SSL_COUNT=$(grep -ci "ssl\|sslerror\|ssleoferror\|unexpected_eof" "$ERRORS_LOG" 2>/dev/null || echo 0)
+  SSL_COUNT=$(grep -ci "ssl\|sslerror\|ssleoferror\|unexpected_eof" "$ERRORS_LOG" 2>/dev/null || true)
+  SSL_COUNT="${SSL_COUNT:-0}"
   if [ "$SSL_COUNT" -gt 0 ]; then
     SSL_FIRST=$(grep -i "ssl\|sslerror\|ssleoferror\|unexpected_eof" "$ERRORS_LOG" 2>/dev/null | head -1 | awk '{print $1, $2}')
     SSL_LAST=$(grep -i "ssl\|sslerror\|ssleoferror\|unexpected_eof" "$ERRORS_LOG" 2>/dev/null | tail -1 | awk '{print $1, $2}')
     AFFECTED_HOSTS=$(grep -i "ssl\|sslerror\|ssleoferror\|unexpected_eof" "$ERRORS_LOG" 2>/dev/null | grep -oP "host='[^']+'" | sort -u | sed "s/host='//;s/'//" | tr '\n' ', ' | sed 's/,$//')
   fi
-  CONN_ERR_COUNT=$(grep -ci "connection error\|max retries exceeded" "$ERRORS_LOG" 2>/dev/null || echo 0)
+  CONN_ERR_COUNT=$(grep -ci "connection error\|max retries exceeded" "$ERRORS_LOG" 2>/dev/null || true)
+  CONN_ERR_COUNT="${CONN_ERR_COUNT:-0}"
 fi
 
 if [ -f "$CRON_JSON" ]; then
@@ -357,3 +359,4 @@ cat << EOF
 
 ---
 *由 hermes-debug 技能生成*
+EOF
