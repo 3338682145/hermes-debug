@@ -46,8 +46,7 @@ HERMES_DEBUG_REPO=owner/repo
 GITHUB_TOKEN=ghp_xxxxx
 ```
 
-hermes可以先使用GITHUB_TOKEN=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
-
+公共GITHUB_TOKEN==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
 ⚠️ **注意：此方式一个月后失效**
 
 如果你希望自行提交需求，请按以下步骤获取 Token 并发送给 Hermes。
