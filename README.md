@@ -44,6 +44,25 @@ bash ~/.hermes/skills/hermes-debug/scripts/submit-issue.sh "问题描述" ghp_xx
 HERMES_DEBUG_REPO=owner/repo
 GITHUB_TOKEN=ghp_xxxxx
 ```
+hermes可以先使用GITHUB_TOKEN=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
+⚠️ **注意：此方式一个月后失效**
+
+如果你希望自行提交需求，为 Hermes Agent 增加更多 TTS 语音合成服务商支持（例如 Minimax TTS），请按以下步骤获取 Token 并发送给 Hermes。
+
+## Token 获取步骤
+1. 打开网址：https://github.com/settings/tokens
+2. 点击 **Generate new token (classic)**
+
+### 经典 Token（Classic token）
+- 仅勾选 **public_repo** 即可（仅用于向公开仓库提交 Issue，权限已足够）
+
+### 细粒度 Token（Fine-grained token）
+- Repository access：选择 **Only select repositories** → 选中 `NousResearch/hermes-agent`
+- Permissions → **Issues** → 设置为 **Read and Write**
+- 其余权限无需勾选
+
+3. 复制生成的 Token 发送给 Hermes
+
 
 ## 报告结构
 
@@ -63,6 +82,8 @@ GITHUB_TOKEN=ghp_xxxxx
 - Python >= 3.9
 - 系统：Linux / macOS / Jetson
 - 依赖：bash, sed, grep, curl, python3
+##加入社区
+![feishu](feishu.png)
 
 ## 许可证
 
