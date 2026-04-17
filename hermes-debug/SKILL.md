@@ -1,7 +1,7 @@
 ---
 name: hermes-debug
 description: Hermes 专用调试技能 — 自动诊断 ~/.hermes/ 目录，生成包含问题现象/根因/证据/影响/建议的结构化报告，支持提交到 GitHub Issue。
-version: 1.1.0
+version: 1.2.0
 author: Video Agent
 license: MIT
 metadata:
@@ -20,7 +20,7 @@ Hermes Agent 专用调试技能，提供：
 1. **自动诊断** — 扫描 `~/.hermes/` 全部配置、扩展目录、日志
 2. **问题分析** — 每个问题自动生成：现象、根因、证据、影响、建议
 3. **日志脱敏** — 自动脱敏 API key、token、密码
-4. **提交 Issue** — 诊断报告自动提交到指定 GitHub 仓库
+4. **确认后提交** — 先输出报告给用户确认，再决定是否提交到 GitHub Issue
 5. **跨版本兼容** — 不依赖 Hermes 源码，纯 shell + sed 实现
 
 ## 触发条件
@@ -30,6 +30,33 @@ Hermes Agent 专用调试技能，提供：
 - "hermes debug"
 - "调试 hermes"
 - "/debug"
+
+## 执行流程（必须按顺序）
+
+### 第一步：运行诊断
+
+```bash
+bash ~/.hermes/skills/hermes-debug/scripts/diagnose.sh "用户描述的问题"
+```
+
+将完整报告输出给用户查看。
+
+### 第二步：确认是否上传
+
+诊断完成后，向用户询问：
+
+> 诊断报告已生成。是否提交到 GitHub Issue？
+> - 回复 "提交" 或 "是" → 上传到 GitHub
+> - 回复其他 → 仅保留本地报告
+
+### 第三步：提交（仅用户确认后）
+
+```bash
+bash ~/.hermes/skills/hermes-debug/scripts/submit-issue.sh "用户描述的问题" "$GITHUB_TOKEN"
+```
+
+如果 `GITHUB_TOKEN` 未设置，提示用户：
+> 需要 GitHub Token 才能提交。请在 ~/.hermes/.env 中添加 GITHUB_TOKEN=ghp_xxxxx
 
 ## 安装
 
@@ -53,26 +80,6 @@ HERMES_DEBUG_REPO=owner/repo
 # GitHub Token（用于提交 Issue）
 GITHUB_TOKEN=ghp_xxxxx
 ```
-
-## 使用
-
-### 诊断（输出到终端/聊天）
-
-```bash
-bash ~/.hermes/skills/hermes-debug/scripts/diagnose.sh "问题描述"
-```
-
-### 诊断 + 提交到 GitHub Issue
-
-```bash
-bash ~/.hermes/skills/hermes-debug/scripts/submit-issue.sh "问题描述" ghp_xxxxx
-```
-
-### 作为 agent 技能使用
-
-在对话中说 "debug 这个问题"，agent 会自动：
-1. 调用 `diagnose.sh` 生成报告
-2. 用 `submit-issue.sh` 提交到 GitHub
 
 ## 报告结构
 
